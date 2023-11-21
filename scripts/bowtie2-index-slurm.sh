@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -p barbun
-qSBATCH -A fozer
+#SBATCH -A fozer
 #SBATCH -J bowtie2-index
 
 #SBATCH -n 20
