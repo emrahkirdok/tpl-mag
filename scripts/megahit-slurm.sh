@@ -15,7 +15,7 @@
 #SBATCH --mail-user= mail
 eval "$(/truba/home/$USER/miniconda3/bin/conda shell.bash hook)"
 
-source activate megahit
+source activate assembly
 
 FASTQ=$1
 BASE=$(basename ${FASTQ} .fastq.gz)
