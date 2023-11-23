@@ -111,4 +111,13 @@ This command analyzes metagenomic data using the Megahit tool and performs assem
 ID=your_sample
 sbatch megahit-slurm.sh data/your_sample.fastq.gz
 ```
-For each sample, a final.contigs.fa file should be generated within each sample directory located at results/assembly/your_sample.
+After this process, a`final.contigs.fa` file should be generated within each sample directory located at `results/assembly/your_sample`.
+
+#### Preparing contigs.fa for analysis
+
+The general purpose of this process is to read the header lines in the specified contig file, modify the information within the headers, and create a new contig file. This way, we prepare the dataset for subsequent analysis
+```
+ID=your_sample
+sbatch scripts/rename-contigs.sh your_sample
+```
+After this process, a `contigs.fa` file should be created for each sample in each sample directory located at `results/assembly/your_sample`.
