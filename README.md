@@ -39,20 +39,27 @@ Table 1: Samples to be used in the study. Adequate DNA could not be obtained fro
 
 Stradomska is a site name (in Cracow, Poland).
 
+#### Samples and fastq files
+
+With this command, you can view how many reads there are in each fastq file. We have shown the lengths in Table 2 for TPL data
+```
+for file in sample*.fastq.gz; do zcat "$file" | wc -l | awk -v var="$file" '{print var " " $1/4}'; done
+```
+Table 2: TPL examples show the reading numbers in fasq files.
+|sample fastq file|number of readings|
+|-----------------|------------------|
+|TPL002.fastq     |    66352800      |
+|TPL003.fastq     |    61041132      |
+|TPL004.fastq     |    43829890      |
+|TPL192.fastq     |    48247075      |
+|TPL193.fastq     |    42732089      |
+|TPL522.fastq     |    43524150      |
+|TPL523.fastq     |    84824896      |
+|TPL524.fastq     |    49005667      |
+|TPL525.fastq     |    44728747      |
 ### De novo assembly of fastq files
 Given that our TPL metagenomic data consists of ancient and short reads, anticipating a high degree of similarity between DNA fragments from each organism, we conducted the de novo metagenome assembly using the MEGAHIT tool. MEGAHIT is a next-generation sequencing metagenome assembler that facilitates the de novo assembly of large and complex metagenomic datasets (Dinghua et al., 2015).
 
-| sample | min contiglength | max contig length | 
-|--------|------------------|-------------------|
-|TPL002  |	200.0           |	  504617.0  	|
-|TPL003  |	200.0           |	  649656.0  	|
-|TPL004  |	200.0           |	  471362.0  	|
-|TPL192  |	200.0           |	  211827.0	    |
-|TPL193  |	208.0           |	  68680.0   	|
-|TPL522  |	206             |	  172439    	|
-|TPL523  |	204.0           |	  285722.0  	|
-|TPL524  |	200.0           |	  340666.0	    |
-|TPL525  |	201.0           |	  114932.0 	    |
 
 ```
 mkdir results
