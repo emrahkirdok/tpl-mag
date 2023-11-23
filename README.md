@@ -22,7 +22,7 @@ This study is conducted utilizing the technological infrastructure of TRUBA (Tur
 
 In the scope of this research, dentin, cement, and skeletal samples from three individuals obtained from Poland and Sweden were utilized (Table 1). These samples were processed by Dr. Maja Krzewinska at Stockholm University's Paleogenetics Center and subsequently sent for DNA sequencing. Within the context of our study, we employed the DNA libraries derived from these samples.
 
-![Stradomska is a site name (in Cracow, Poland).](image-1.png)
+![Stradomska is a site name (in Cracow, Poland).](image-2.png)
 
 
 ```
