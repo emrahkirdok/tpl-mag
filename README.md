@@ -68,6 +68,30 @@ In the next step, we aimed to generate quality control statistics for the obtain
 
 ### Pipeline Implementation
 
+#### Installing Anaconda in the Home Directory
+
+Download miniconda:
+```
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+```
+
+You can delete the script after it is finished:
+```
+rm Miniconda3-latest-Linux-x86_64.sh
+```
+
+Update Conda.
+```
+eval "$(/truba/home/$USER/miniconda3/bin/conda shell.bash hook)"
+conda update conda
+```
+
+After this step, you can install the library you will use in the conda virtual environment:
+```
+conda env create -f mapping.yml
+conda env create -f stats.yml
+```
 
 ![pipeline](image.png)
 
