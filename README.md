@@ -27,6 +27,20 @@ Table 1: Samples to be used in the study. Adequate DNA could not be obtained fro
 ![Table 1).](image-2.png)
 Stradomska is a site name (in Cracow, Poland).
 
+### De novo assembly of fastq files
+Given that our TPL metagenomic data consists of ancient and short reads, anticipating a high degree of similarity between DNA fragments from each organism, we conducted the de novo metagenome assembly using the MEGAHIT tool. MEGAHIT is a next-generation sequencing metagenome assembler that facilitates the de novo assembly of large and complex metagenomic datasets (Dinghua et al., 2015).
+
+| sample | min contiglength | max contig length | 
+|--------|------------------|-------------------|
+|TPL002  |	200.0           |	  504617.0  	|
+|TPL003  |	200.0           |	  649656.0  	|
+|TPL004  |	200.0           |	  471362.0  	|
+|TPL192  |	200.0           |	  211827.0	    |
+|TPL193  |	208.0           |	  68680.0   	|
+|TPL522  |	206             |	  172439    	|
+|TPL523  |	204.0           |	  285722.0  	|
+|TPL524  |	200.0           |	  340666.0	    |
+|TPL525  |	201.0           |	  114932.0 	    |
 
 ```
 mkdir results
