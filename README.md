@@ -94,7 +94,7 @@ conda env create -f stats.yml
 ```
 #### An overview of the tool and file hierarchy
 
-Image 1: The order of use of the tools and data is visualized in the pipeline shown in the figure.
+Figure 1: The order of use of the tools and data is visualized in the pipeline shown in the figure.
 ![pipeline](image.png)
 
 Create the `results` directory and its subreddits to which the results will be transferred.
