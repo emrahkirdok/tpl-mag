@@ -137,3 +137,33 @@ ID=your_sample
 sbatch scripts/mapped-slurm.sh your_sample
 ```
 As output, the `results/mapping/your sample/` directory for each sample is obtained in the `mapped.sorted.bam` file.
+
+#### Calculating coverage information for the BAM file
+
+This command allows the user to go to their home directory (~) and then copy the .profile file to the .bash_profile file. This process ensures that the .bash_profile file is loaded when the user initiates the bash shell.
+The .profile and .bash_profile files typically contain commands to be executed when a user session starts. If the .bash_profile file has not been loaded before, many systems may load the .profile file. This command can be used to synchronize the contents of the two files or copy one to the other.
+```
+cd ~
+cp .profile .bash_profile
+```
+
+This command navigates to the `bamcov` folder, copies the `bamcov` program file to the `~/bin` directory, compiles the program using `make`, and runs its tests with `make test`. These steps aim to prepare the bamcov program for use.
+```
+conda activate mapping
+git clone --recurse-submodules https://github.com/fbreitwieser/bamcov
+cd bamcov
+cp /truba/home/$USER/Programs/bamcov/bamcov /truba/home/fozer/bin/bamcov
+make
+make test
+
+```
+
+Now, we will create a folder for the programs we will install ourselves. Let's go to the home folder.
+```
+cd ~
+mkdir bin
+```
+"Then, let's add the following line to the .bash_profile file:```PATH=${PATH}:/truba/home/$USER/bin```
+This way, we can copy our own installed programs to the `~/bin folder.`
+
+Now, you will be able to run it simply by typing "bamcov." (However, you may need to log out and log back in once; the .bash_profile file needs to run once for this.) This file runs every time you enter the bash shell.
