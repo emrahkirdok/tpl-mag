@@ -66,6 +66,7 @@ The FastQ files of ancient metagenomic TPL samples used in this study were merge
 ### Obtaining metagenomic statistics
 In the next step, we aimed to generate quality control statistics for the obtained contig sequences. To achieve this, we aligned the contig sequences from TPL data to fasta files using the bowtie2 program (Langmead & Salzberg, 2012). As a result of this process, we obtained a bam file containing aligned read information. Subsequently, using the samtools program (Li et al., 2009), we extracted parameters such as the length of contigs, average read depth, and coverage for the contigs.
 
+### Pipeline Implementation
 
 
 ![pipeline](image.png)
