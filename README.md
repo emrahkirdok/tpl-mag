@@ -92,9 +92,12 @@ After this step, you can install the library you will use in the conda virtual e
 conda env create -f mapping.yml
 conda env create -f stats.yml
 ```
+#### An overview of the tool and file hierarchy
 
+Image 1: The order of use of the tools and data is visualized in the pipeline shown in the figure.
 ![pipeline](image.png)
 
+Create the `results` directory and its subreddits to which the results will be transferred.
 ```
 mkdir results
 cd results/
