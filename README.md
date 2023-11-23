@@ -16,6 +16,7 @@ In essence, our method orchestrates a systematic exploration into the complexiti
 ## Working Server: Truba
 
 This study is conducted utilizing the technological infrastructure of TRUBA (Turkish National Academic Network and Information Center High-Performance Computing Center), which belongs to TÜBITAK ULAKBIM. TRUBA is a national e-Infrastructure providing services such as high-performance computing, data-intensive computing, scientific data repositories, and cloud computing. We express our gratitude to TRUBA for enabling the data analyses and computations conducted within the scope of this study.
+Important note!: Please add your own server name, username, email to the required sections while your users are running the scripts. Depending on the size of your data and taking into account the number of cores provided to you by your presentation, it is necessary to optimize the number of cores you request and the processing time according to yourself
 
 ## Materials and Methods
 
@@ -57,9 +58,17 @@ Table 2: TPL examples show the reading numbers in fasq files.
 |TPL523.fastq     |    84824896      |
 |TPL524.fastq     |    49005667      |
 |TPL525.fastq     |    44728747      |
+
 ### De novo assembly of fastq files
 Given that our TPL metagenomic data consists of ancient and short reads, anticipating a high degree of similarity between DNA fragments from each organism, we conducted the de novo metagenome assembly using the MEGAHIT tool. MEGAHIT is a next-generation sequencing metagenome assembler that facilitates the de novo assembly of large and complex metagenomic datasets (Dinghua et al., 2015).
+The FastQ files of ancient metagenomic TPL samples used in this study were merged using the Megahit program with predefined parameters, resulting in fasta files containing contig sequences. The FastQ files of ancient metagenomic TPL samples were merged using the Megahit program with different k-mer lengths (21, 29, 39, 59, 79, 99, 119). The assembly process was carried out with these parameters, and the obtained results were saved as Fasta files containing contig sequences
 
+### Obtaining metagenomic statistics
+In the next step, we aimed to generate quality control statistics for the obtained contig sequences. To achieve this, we aligned the contig sequences from TPL data to fasta files using the bowtie2 program (Langmead & Salzberg, 2012). As a result of this process, we obtained a bam file containing aligned read information. Subsequently, using the samtools program (Li et al., 2009), we extracted parameters such as the length of contigs, average read depth, and coverage for the contigs.
+
+
+
+![pipeline](image.png)
 
 ```
 mkdir results
