@@ -104,3 +104,4 @@ cd results/
 mkdir assembly
 mkdir classification
 ```
+#### Megahit for Metagenomic Assembly
