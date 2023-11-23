@@ -4,3 +4,5 @@ channels:
 dependencies:
   - r
   - r-optparse
+  - r-ggplot2
+  - r-dplyr
