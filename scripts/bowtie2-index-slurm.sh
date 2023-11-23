@@ -14,7 +14,7 @@
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=#mail
 
-conda activate mapping
+source activate mapping
 
 ID=$1
 
