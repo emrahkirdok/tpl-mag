@@ -24,7 +24,18 @@ This study is conducted utilizing the technological infrastructure of TRUBA (Tur
 In the scope of this research, dentin, cement, and skeletal samples from three individuals obtained from Poland and Sweden were utilized (Table 1). These samples were processed by Dr. Maja Krzewinska at Stockholm University's Paleogenetics Center and subsequently sent for DNA sequencing. Within the context of our study, we employed the DNA libraries derived from these samples.
 
 Table 1: Samples to be used in the study. Adequate DNA could not be obtained from the Tpl194 sample. Stradomska is an archaeological site located in Krakow, Poland.
-![Table 1).](image-2.png)
+|Individual| sample |    Location       | Skeletal specimen  |The amount of skeletal powder used|
+|----------|--------|-------------------|--------------------|----------------------------------|
+|     1    |TPL002  |	Sweden          |	  Dental cement  |             79 mg                |
+|     1    |TPL003  |	Sweden          |	  Dentin  	     |             100 mg               |
+|     1    |TPL004  |	Sweden          |	  Skull (lesion) |             152 mg               |
+|     2    |TPL192  |	Poland 19       |	  Dental cement  |             75 mg                |
+|     2    |TPL193  |	Poland 190      |	  Dentin         |             74 mg                |
+|     2    |TPL194  |   Poland 190      |     Skull (lesion) |             80 mg                |
+|     3    |TPL522  |	Poland 52       |	  Dental cement  |             87 mg                |
+|     3    |TPL523  |	Poland 52       |	  Dentin       	 |             85 mg                |
+|     3    |TPL524  |	Poland 52       |	  Skull (lesion) |             139 mg               |
+|     3    |TPL525  |	Poland 52       |	  Long bone 	 |             84 mg                |
 Stradomska is a site name (in Cracow, Poland).
 
 ### De novo assembly of fastq files
