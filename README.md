@@ -121,3 +121,19 @@ ID=your_sample
 sbatch scripts/rename-contigs.sh your_sample
 ```
 After this process, a `contigs.fa` file should be created for each sample in each sample directory located at `results/assembly/your_sample`.
+
+#### Quality control statistics analysis
+
+
+This command uses the bowtie2-build tool to create a large index for a specific metagenomic assembly file (contigs.fa) located in the specified directory. The generated index allows Bowtie2 to perform alignments on this assembly file more efficiently and quickly.
+```
+ID=your_sample
+sbatch scripts/bowtie2-index-slurm.sh your_sample
+```
+
+The overall purpose of this command is to align unassembled metagenomic data to the assembled state and subsequently process the obtained alignment results.
+```
+ID=your_sample
+sbatch scripts/mapped-slurm.sh your_sample
+```
+As output, the `results/mapping/your sample/` directory for each sample is obtained in the `mapped.sorted.bam` file.
