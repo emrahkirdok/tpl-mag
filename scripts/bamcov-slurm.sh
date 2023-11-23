@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#SBATCH -p barbun
-#SBATCH -A fozer
+#SBATCH -p #server
+#SBATCH -A #user
 #SBATCH -J bamcov
 
 #SBATCH -n 4
@@ -12,7 +12,7 @@
 #SBATCH -e logs/bamcov-%j.err
 
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=f.kursatozer@gmail.com
+#SBATCH --mail-user=#mail
 
 ID=$1
 

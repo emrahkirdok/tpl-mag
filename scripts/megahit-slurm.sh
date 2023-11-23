@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#SBATCH -p barbun
-#SBATCH -A fozer
+#SBATCH -p #server
+#SBATCH -A #user
 #SBATCH -J megahit-try-1
 
 #SBATCH -n 20
@@ -12,7 +12,7 @@
 #SBATCH --error=megahit-%j.err
 
 #SBATCH --mail-type=FAIL
-#SBATCH --mail-user=f.kursatozer@gmail.com
+#SBATCH --mail-user= mail
 eval "$(/truba/home/$USER/miniconda3/bin/conda shell.bash hook)"
 
 # conda activate megahit

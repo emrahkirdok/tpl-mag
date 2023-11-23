@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#SBATCH -p barbun
-#SBATCH -A fozer
+#SBATCH -p #server
+#SBATCH -A #user
 #SBATCH -J mapped
 
 #SBATCH -n 20
@@ -13,7 +13,7 @@
 
 
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=f.kursatozer@gmail.com 
+#SBATCH --mail-user=#mail
 
 source activate mapping
 

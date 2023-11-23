@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#SBATCH -p barbun
-#SBATCH -A fozer
+#SBATCH -p #server
+#SBATCH -A #user
 #SBATCH -J bowtie2-index
 
 #SBATCH -n 20
@@ -12,7 +12,7 @@
 #SBATCH -e logs/bowtie2-index-%j.err
 
 #SBATCH --mail-type=FAIL
-#SBATCH --mail-user=f.kursatozer@gmail.com
+#SBATCH --mail-user=#mail
 
 conda activate mapping
 

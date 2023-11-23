@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#SBATCH -p barbun
-#SBATCH -A fozer
+#SBATCH -p #server
+#SBATCH -A #user
 #SBATCH -J rename-contigs
 
 #SBATCH -n 4
@@ -12,7 +12,7 @@
 #SBATCH --error=logs/rename-contigs-%j.err
 
 #SBATCH --mail-type=FAIL
-#SBATCH --mail-user=f.kursatozer@gmail.com
+#SBATCH --mail-user=#mail
 
 conda activate stats
 
