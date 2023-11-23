@@ -105,3 +105,10 @@ mkdir assembly
 mkdir classification
 ```
 #### Megahit for Metagenomic Assembly
+
+This command analyzes metagenomic data using the Megahit tool and performs assembly using different k-mer lengths. And this command should be applied to all sample fastq files.
+```
+ID=your_sample
+sbatch megahit-slurm.sh data/your_sample.fastq.gz
+```
+For each sample, a final.contigs.fa file should be generated within each sample directory located at results/assembly/your_sample.
