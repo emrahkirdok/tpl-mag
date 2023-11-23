@@ -136,7 +136,7 @@ The overall purpose of this command is to align unassembled metagenomic data to 
 ID=your_sample
 sbatch scripts/mapped-slurm.sh your_sample
 ```
-As output, the `results/mapping/your sample/` directory for each sample is obtained in the `mapped.sorted.bam` file.
+As output, the `results/mapping/your_sample/` directory for each sample is obtained in the `mapped.sorted.bam` file.
 
 #### Calculating coverage information for the BAM file
 
@@ -167,3 +167,10 @@ mkdir bin
 This way, we can copy our own installed programs to the `~/bin folder.`
 
 Now, you will be able to run it simply by typing "bamcov." (However, you may need to log out and log back in once; the .bash_profile file needs to run once for this.) This file runs every time you enter the bash shell.
+
+Calculates coverage information for the BAM file and saves this information to a text file.
+```
+ID=your_sample
+sbatch scripts/bamcov-slurm.sh your_sample
+```
+Saves this information to a text file named contig_coverage.txt in the directory results/mapping/your_sample/ for each sample.
