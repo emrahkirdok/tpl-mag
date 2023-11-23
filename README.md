@@ -36,6 +36,7 @@ Table 1: Samples to be used in the study. Adequate DNA could not be obtained fro
 |     3    |TPL523  |	Poland 52       |	  Dentin       	 |             85 mg                |
 |     3    |TPL524  |	Poland 52       |	  Skull (lesion) |             139 mg               |
 |     3    |TPL525  |	Poland 52       |	  Long bone 	 |             84 mg                |
+
 Stradomska is a site name (in Cracow, Poland).
 
 ### De novo assembly of fastq files
