@@ -14,7 +14,7 @@
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=#mail
 
-conda activate stats
+source activate stats
 
 ID=$1
 
