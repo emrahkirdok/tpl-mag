@@ -6,7 +6,7 @@ script_dir <- dirname(sys.frame(1)$ofile)
 
 file_path <- file.path(script_dir, sprintf("results/mapping/%s/contig_coverage.txt", ID))
 
-results <- read.table(file = file_path, header = TRUE)
+results <- read.table(file = file_path, header = FALSE)
 
 p1 <- ggplot(data = results, aes(x=V3)) + 
   geom_histogram() + 

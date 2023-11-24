@@ -19,7 +19,7 @@ source activate stats
 
 ID=$1
 
-Rscript scripts/genom_coverag.R --input results/mapping/${ID}/contig_coverage.txt --ID=${ID}
+Rscript scripts/genom_coverage.R --input results/mapping/${ID}/contig_coverage.txt --ID=${ID}
 
 mv contig_length_plot.png results/mapping/${ID}/
 mv contig_breadth_plot.png results/mapping/${ID}/
