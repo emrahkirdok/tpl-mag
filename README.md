@@ -187,3 +187,17 @@ ID=my_sapmle
 sbatch scripts/genom_coverage.sh my_sapmle
 ```
 The graphic outputs will be saved to the `results/mapping/your_sample/` directories for each sample.
+
+## Results
+
+| sample | min contiglength | max contig length | 
+|--------|------------------|-------------------|
+|TPL002  |	    200.0       |	      504617.0	|
+|TPL003  |  	200.0       |	      649656.0 	|
+|TPL004  |  	200.0       |	      471362.0	|
+|TPL192  |  	200.0       |	      211827.0	|
+|TPL193  |  	208.0       |	      68680.0 	|
+|TPL522  |  	206.0       |   	  172439.0 	|
+|TPL523  |  	204.0       |   	  285722.0	|
+|TPL524  |  	200.0       |	      340666.0	|
+|TPL525  |  	201.0       |   	  114932.0 	|
