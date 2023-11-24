@@ -105,6 +105,7 @@ mkdir results
 cd results/
 mkdir assembly
 mkdir classification
+cd ..
 ```
 #### Megahit for Metagenomic Assembly
 
