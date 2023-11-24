@@ -99,6 +99,8 @@ Figure 1: The order of use of the tools and data is visualized in the pipeline s
 
 Create the `results` directory and its subreddits to which the results will be transferred.
 ```
+mkdir data
+mkdir logs
 mkdir results
 cd results/
 mkdir assembly
