@@ -174,3 +174,16 @@ ID=your_sample
 sbatch scripts/bamcov-slurm.sh your_sample
 ```
 Saves this information to a text file named contig_coverage.txt in the directory results/mapping/your_sample/ for each sample.
+
+#### Genome coverage histogram plots
+
+With this command, we obtained these histograms for each sample:
+
+- Breadth of coverage histogram
+- Mean read depth histogram
+- Contig length histogram
+```
+ID=my_sapmle
+sbatch scripts/genom_coverage.sh my_sapmle
+```
+The graphic outputs will be saved to the `results/mapping/your_sample/` directories for each sample.
