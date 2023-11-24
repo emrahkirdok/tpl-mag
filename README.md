@@ -183,8 +183,8 @@ With this command, we obtained these histograms for each sample:
 - Mean read depth histogram
 - Contig length histogram
 ```
-ID=my_sapmle
-sbatch scripts/genom_coverage.sh my_sapmle
+ID=your_sapmle
+sbatch scripts/genom_coverage.sh your_sapmle
 ```
 The graphic outputs will be saved to the `results/mapping/your_sample/` directories for each sample.
 
