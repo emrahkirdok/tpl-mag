@@ -16,7 +16,7 @@ In essence, our method orchestrates a systematic exploration into the complexiti
 ## Working Server: Truba
 
 This study is conducted utilizing the technological infrastructure of TRUBA (Turkish National Academic Network and Information Center High-Performance Computing Center), which belongs to TÜBITAK ULAKBIM. TRUBA is a national e-Infrastructure providing services such as high-performance computing, data-intensive computing, scientific data repositories, and cloud computing. We express our gratitude to TRUBA for enabling the data analyses and computations conducted within the scope of this study.
-Important note!: Please add your own server name, username, email to the required sections while your users are running the scripts. Depending on the size of your data and taking into account the number of cores provided to you by your presentation, it is necessary to optimize the number of cores you request and the processing time according to yourself
+Important note!: Please add your own server name, username, email to the required sections while your users are running the scripts. Depending on the size of your data and taking into account the number of cores provided to you by your presentation, it is necessary to optimize the number of cores you request and the processing time according to yourself.
 
 ## Materials and Methods
 
