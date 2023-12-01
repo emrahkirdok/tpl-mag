@@ -153,3 +153,10 @@ sbatch scripts/genom_coverage.sh ${ID}
 ```
 
 The graphic outputs will be saved to the `results/mapping/${ID}/` directories for each sample.
+
+#### Filtering with PyDamage
+
+```bash
+ID=your_sample
+sbatch scripts/pydamge.sh your_sample
+```
