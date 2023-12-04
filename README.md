@@ -71,7 +71,7 @@ This command analyzes metagenomic data using the Megahit tool and performs assem
 
 ```bash
 ID=your_sample
-sbatch megahit-slurm.sh data/your_sample.fastq.gz
+sbatch megahit-slurm.sh data/${ID}.fastq.gz
 ```
 
 After this process, a`final.contigs.fa` file should be generated within each sample directory located at `results/assembly/${ID}`.
@@ -82,7 +82,7 @@ The general purpose of this process is to read the header lines in the specified
 
 ```bash
 ID=your_sample
-sbatch scripts/rename-contigs.sh your_sample
+sbatch scripts/rename-contigs.sh ${ID}
 ```
 
 After this process, a `contigs.fa` file should be created for each sample in each sample directory located at `results/assembly/${ID}`.
@@ -137,7 +137,7 @@ ID=your_sample
 sbatch scripts/bamcov-slurm.sh ${ID}
 ```
 ,
-Saves this information to a text file named `contig_coverage.txt` in the directory results/mapping/your_sample/ for each sample.
+Saves this information to a text file named `contig_coverage.txt` in the directory results/mapping/${ID}/ for each sample.
 
 #### Genome coverage histogram plots
 
@@ -158,5 +158,5 @@ The graphic outputs will be saved to the `results/mapping/${ID}/` directories fo
 
 ```bash
 ID=your_sample
-sbatch scripts/pydamge.sh your_sample
+sbatch scripts/pydamge.sh ${ID}
 ```
