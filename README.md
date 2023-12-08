@@ -158,5 +158,5 @@ The graphic outputs will be saved to the `results/mapping/${ID}/` directories fo
 
 ```bash
 ID=your_sample
-sbatch scripts/pydamge.sh ${ID}
+sbatch scripts/pydamage.sh ${ID}
 ```
