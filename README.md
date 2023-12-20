@@ -49,6 +49,8 @@ After this step, you can install the library you will use in the conda virtual e
 ```bash
 conda env create -f mapping.yml
 conda env create -f stats.yml
+conda env create -f pydamage
+conda env create -f kraken
 ```
 
 #### An overview of the tool and file hierarchy
