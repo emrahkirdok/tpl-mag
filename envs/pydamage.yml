@@ -1,0 +1,5 @@
+name: pydamage
+channels:
+  - bioconda
+dependencies:
+  - pydamage
