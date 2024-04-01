@@ -76,5 +76,5 @@ for (sample in sample_names) {
 print(result_table)
 
 # Write the result table to a file
-result_file_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/tpl_table.txt"
+result_file_path <- " " # your result file path
 write.table(result_table, file = result_file_path, sep = "\t", col.names = TRUE, row.names = FALSE, quote = TRUE)
