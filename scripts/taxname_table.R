@@ -1,72 +1,80 @@
-# Gerekli kütüphaneleri yükle
 library(dplyr)
-library(data.table)
+library(tidyr)
+library(readr)
 
-# Dosya yollarını belirle
-dosya_yolu <- "C:/Users/kursat/Desktop/table/pydamage_results/"
-klasor_yolu <- "C:/Users/kursat/Desktop/table/pydamage_results/"
+# Specify file paths
+file_path <- "C:/Users/kursa/OneDrive/Desktop/table/data/"
 
-# Örnek klasörlerini belirle
-ornek_klasorler <- c("tpl002", "tpl003", "tpl004", "tpl192", "tpl193", "tpl522", "tpl523", "tpl524", "tpl525")
+# Sample names
+sample_names <- c("tpl002", "tpl003", "tpl004", "tpl192", "tpl193", "tpl522", "tpl523", "tpl524", "tpl525")
 
-# Boş bir liste oluştur
-sonuc_tablolari <- list()
+# Create an empty dataframe
+result_table <- data.frame()
 
-# Her örnek klasörü için işlem yap
-for (klasor_adi in ornek_klasorler) {
+# Combine all references collectively
+all_ref_ids <- unique(unlist(sapply(sample_names, function(sample) {
+  data <- read_csv(file.path(file_path, sample, "pydamage_filtered_results.csv"))
+  data$reference
+})))
+
+# Create a loop for each sample
+for (sample in sample_names) {
+  # Specify file name
+  file_name <- file.path(file_path, sample, "pydamage_filtered_results.csv")
   
-  # Klasör içindeki dosya yolunu oluştur
-  dosya_yolu_veri <- file.path(dosya_yolu, klasor_adi, "pydamage_filtered_results.csv")
-  dosya_yolu_contig <- file.path(dosya_yolu, klasor_adi, "contig_coverage.txt")
-  dosya_yolu_sequences <- file.path(dosya_yolu, klasor_adi, paste0(klasor_adi, ".sequences"))
+  # Read the file
+  data <- read_csv(file_name)
   
-  # Dosyalar varsa oku
-  if (file.exists(dosya_yolu_veri) && file.exists(dosya_yolu_contig) && file.exists(dosya_yolu_sequences)) {
-    
-    # Dosyayı oku ve veri çerçevesine dönüştür
-    veri <- fread(dosya_yolu_veri)
-    
-    # Antiklik değerini hesapla
-    veri$Antiklik <- ifelse(veri$predicted_accuracy >= 0.95, TRUE, FALSE)
-    
-    # Örnek adı sütununu ekle
-    veri$Sample <- klasor_adi
-    
-    # Contig verisini oku
-    contig_veri <- fread(dosya_yolu_contig, header = FALSE)
-    setnames(contig_veri, c("Contig", "Coverage_start", "Coverage_end", "Breadth_of_Coverage", "Length", "Coverage_percent", "Depth_of_Coverage", "GC_content", "TaxID"))
-    
-    # Sequences verisini oku ve sınıflandırma yap
-    sequences_veri <- fread(dosya_yolu_sequences, header = FALSE)
-    setnames(sequences_veri, c("Type", "Contig", "TaxID", "Length", "Classification"))
-    sequences_veri$Classification <- ifelse(sequences_veri$Type == "C", "T", "F")
-    
-    # Sol birleşim yaparak verileri birleştir
-    eslesme <- left_join(veri, contig_veri, by = c("reference" = "Contig"))
-    eslesme <- left_join(eslesme, sequences_veri, by = c("reference" = "Contig"))
-    
-    # Classification ve TaxID sütunlarını kontrol et ve eksikse NA ekle
-    if (!("Classification" %in% colnames(eslesme))) {
-      eslesme$Classification <- NA
-    }
-    if (!("TaxID" %in% colnames(eslesme))) {
-      eslesme$TaxID <- NA
-    }
-    
-    # İstenen sütunları seç
-    if ("Length" %in% colnames(eslesme)) {
-      eslesme <- select(eslesme, reference, Antiklik, starts_with("CtoT"), Length, Breadth_of_Coverage, Depth_of_Coverage, TaxID, Classification)
-    } else {
-      eslesme <- select(eslesme, reference, Antiklik, starts_with("CtoT"), Breadth_of_Coverage, Depth_of_Coverage, TaxID, Classification)
-    }
-    
-    # Sonuç tablosunu güncelle
-    sonuc_tablolari[[klasor_adi]] <- eslesme
-  }
+  # Calculate the antiquity value (taken from the predicted_accuracy column)
+  data$Antiquity <- data$predicted_accuracy >= 0.95
+  
+  # Read the Contig coverage file
+  contig_file <- file.path(file_path, sample, "contig_coverage.txt")
+  contig_data <- read_table(contig_file, col_names = FALSE)
+  
+  # Get data from appropriate columns
+  matching_indices <- match(data$reference, contig_data$X1)
+  Length <- contig_data$X3[na.omit(matching_indices)]
+  Breadth_of_Coverage <- contig_data$X6[na.omit(matching_indices)]
+  Depth_of_Coverage <- contig_data$X7[na.omit(matching_indices)]
+  
+  # Add to the dataframe
+  data <- cbind(data, Length, Breadth_of_Coverage, Depth_of_Coverage)
+  
+  # Read the Sample sequences file
+  sample_file <- file.path(file_path, sample, "sample.sequences")
+  sample_data <- read_table(sample_file, col_names = FALSE)
+  
+  # Filter the reference IDs
+  matching_sample <- sample_data[sample_data$X2 %in% all_ref_ids, ]
+  
+  # Get Taxid and Classification information
+  taxid <- matching_sample$X3[match(data$reference, matching_sample$X2)]
+  classification <- matching_sample$X1[match(data$reference, matching_sample$X2)]
+  
+  # Add to the dataframe
+  data <- cbind(data, Taxid = taxid, Classification = classification)
+  
+  # Reorder columns
+  data <- data %>% select(reference, Antiquity, predicted_accuracy, Length, Breadth_of_Coverage, Depth_of_Coverage, Classification, Taxid, starts_with("CtoT"))
+  
+  # Add taxName column from sample.report file
+  report_file <- file.path(file_path, sample, "sample.report")
+  report_data <- read_table(report_file, skip = 2, col_names = TRUE)
+  
+  # Get taxName corresponding to taxID
+  taxName <- report_data$taxName[match(taxid, report_data$taxID)]
+  
+  # Add taxName column to the dataframe
+  data$taxName <- taxName
+  
+  # Add to the result table
+  result_table <- bind_rows(result_table, data)
 }
 
-# Tüm örneklerden oluşan birleşik bir veri çerçevesi oluştur
-sonuc_tablosu <- bind_rows(sonuc_tablolari)
+# Print the result table
+print(result_table)
 
-# Sonuçları göster
-print(sonuc_tablosu)
+# Write the result table to a file
+result_file_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/tpl_table.txt"
+write.table(result_table, file = result_file_path, sep = "\t", col.names = TRUE, row.names = FALSE, quote = TRUE)
