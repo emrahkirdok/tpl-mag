@@ -3,7 +3,7 @@ library(tidyr)
 library(readr)
 
 # Specify file paths
-file_path <- "C:/Users/kursa/OneDrive/Desktop/table/data/"
+file_path <- " " # your file path"
 
 # Sample names
 sample_names <- c("tpl002", "tpl003", "tpl004", "tpl192", "tpl193", "tpl522", "tpl523", "tpl524", "tpl525")
