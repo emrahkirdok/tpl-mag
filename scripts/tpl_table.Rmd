@@ -1,0 +1,256 @@
+---
+title: "tpl_table"
+author: "Furkan Kürşat Özer"
+date: "29 04 2024"
+output: html_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+# Load necessary libraries
+library(readr)
+library(dplyr)
+
+# Base directory for CSV files
+base_dir <- "C:/Users/kursa/OneDrive/Desktop/data/pydamage"
+
+# Folder names to read data from
+folders <- c("tpl002", "tpl003", "tpl004", "tpl192", "tpl193", "tpl522", "tpl523", "tpl524", "tpl525")
+
+# Read all pydamage results and merge them into one data frame
+merged_data <- folders %>%
+  lapply(function(folder) {
+    csv_file <- file.path(base_dir, folder, "pydamage_results.csv")
+    read_csv(csv_file, show_col_types = FALSE)
+  }) %>%
+  bind_rows()
+
+# Save the merged data to a CSV file
+output_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/merged_pydamage_results.csv"
+write_csv(merged_data, output_path)
+
+cat("The table was successfully saved:", output_path, "\n")
+
+# Select specific columns to create a new table
+selected_columns <- c("reference", "CtoT-0", "CtoT-1", "CtoT-2", "CtoT-3", "CtoT-4", 
+                      "CtoT-5", "CtoT-6", "CtoT-7", "CtoT-8", "CtoT-9", 
+                      "CtoT-10", "CtoT-11", "CtoT-12", "CtoT-13", "CtoT-14", 
+                      "CtoT-15", "CtoT-16", "CtoT-17", "CtoT-18", "CtoT-19")
+
+filtered_data <- merged_data %>%
+  select(all_of(selected_columns))
+
+# Save the filtered data to a CSV file
+output_path_filtered <- "C:/Users/kursa/OneDrive/Desktop/sonuc/filtered_pydamage_results.csv"
+write_csv(filtered_data, output_path_filtered)
+
+cat("The filtered table was successfully saved:", output_path_filtered, "\n")
+
+# Load the filtered data
+merged_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/filtered_pydamage_results.csv"
+merged_data <- read_csv(merged_path, show_col_types = FALSE)
+
+# Base directory for CSV files with ancient references
+base_dir_filter <- "C:/Users/kursa/OneDrive/Desktop/data/filter"
+
+# Read ancient references and create a unique list
+antique_references <- folders %>%
+  lapply(function(folder) {
+    csv_file <- file.path(base_dir_filter, folder, "pydamage_filtered_results.csv")
+    read_csv(csv_file, show_col_types = FALSE) %>%
+      pull(reference)
+  }) %>%
+  unlist() %>%
+  unique()
+
+# Add the "Antiquity" column to the main data frame
+merged_data_with_antiquity <- merged_data %>%
+  mutate(Antiquity = reference %in% antique_references) %>%
+  relocate(Antiquity, .after = reference)
+
+# Save the data with "Antiquity" information to a CSV file
+output_path_with_antiquity <- "C:/Users/kursa/OneDrive/Desktop/sonuc/tpl_table.csv"
+write_csv(merged_data_with_antiquity, output_path_with_antiquity)
+
+cat("With the knowledge of antiquity, the table was successfully recorded:", output_path_with_antiquity, "\n")
+
+# Load the data with antiquity information
+merged_data_with_antiquity <- read_csv(output_path_with_antiquity, show_col_types = FALSE)
+
+# Calculate the total number of references
+total_references <- nrow(merged_data_with_antiquity)
+
+# Calculate the number of antique references
+num_antique_references <- merged_data_with_antiquity %>%
+  filter(Antiquity == TRUE) %>%
+  nrow()
+
+# Calculate the percentage of antique references
+percentage_antique <- (num_antique_references / total_references) * 100
+
+# Store the results in a text format
+results <- paste(
+  "Total number of references:", total_references,
+  "\nNumber of antique references:", num_antique_references,
+  "\nPercentage of antique references:", round(percentage_antique, 2), "%",
+  sep = " "
+)
+
+# Save the results to a TXT file
+output_txt_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/merged_with_antiquity.csv"
+writeLines(results, output_txt_path)
+
+cat("Results successfully saved to:", output_txt_path, "\n")
+```
+```{r}
+library(readr)
+library(dplyr)
+
+merged_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/tpl_table.csv"
+merged_data_with_antiquity <- read_csv(merged_path, show_col_types = FALSE)
+
+base_dir <- "C:/Users/kursa/OneDrive/Desktop/data/filter"
+folders <- c("tpl002", "tpl003", "tpl004", "tpl192", "tpl193", "tpl522", "tpl523", "tpl524", "tpl525")
+
+classification_taxid_data <- folders %>%
+  lapply(function(folder) {
+    file_path <- file.path(base_dir, folder, "sample.sequences")
+    read_delim(file_path, delim = "\t", col_names = FALSE, show_col_types = FALSE) %>%
+      rename(Classification = X1, reference = X2, Taxid = X3)
+  }) %>%
+  bind_rows()
+
+final_data <- merged_data_with_antiquity %>%
+  left_join(classification_taxid_data, by = "reference") %>%
+  relocate(Classification, Taxid, .after = 2)
+
+output_final_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/final_table_with_classification_and_taxid.csv"
+write_csv(final_data, output_final_path)
+
+cat("Final table with classification and taxid was successfully saved to:", output_final_path, "\n")
+
+```
+```{r}
+library(readr)
+library(dplyr)
+
+merged_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/final_table_with_classification_and_taxid.csv"
+merged_data <- read_csv(merged_path, show_col_types = FALSE) %>%
+  distinct(reference, .keep_all = TRUE) %>%
+  select(-X4, -X5)
+
+base_dir <- "C:/Users/kursa/OneDrive/Desktop/data/filter"
+folders <- c("tpl002", "tpl003", "tpl004", "tpl192", "tpl193", "tpl522", "tpl523", "tpl524", "tpl525")
+
+taxid_taxname_data <- folders %>%
+  lapply(function(folder) {
+    file_path <- file.path(base_dir, folder, "sample.report")
+    read_delim(file_path, delim = "\t", skip = 2, col_names = TRUE, show_col_types = FALSE) %>%
+      select(taxID = `taxID`, taxName = `taxName`) %>%
+      distinct(taxID, .keep_all = TRUE)
+  }) %>%
+  bind_rows()
+
+final_data <- merged_data %>%
+  left_join(taxid_taxname_data, by = c("Taxid" = "taxID")) %>%
+  distinct(reference, .keep_all = TRUE)
+
+final_data <- final_data %>%
+  relocate(taxName, .after = last_col())
+
+output_final_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/final_table_with_taxname.csv"
+write_csv(final_data, output_final_path)
+
+cat("Final table with taxName was successfully saved to:", output_final_path, "\n")
+
+```
+```{r}
+library(readr)
+library(dplyr)
+
+merged_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/final_table_with_taxname.csv"
+final_data <- read_csv(merged_path, show_col_types = FALSE) %>%
+  distinct(reference, .keep_all = TRUE)  
+
+base_dir <- "C:/Users/kursa/OneDrive/Desktop/data/filter"
+folders <- c("tpl002", "tpl003", "tpl004", "tpl192", "tpl193", "tpl522", "tpl523", "tpl524", "tpl525")
+
+coverage_data <- folders %>%
+  lapply(function(folder) {
+    file_path <- file.path(base_dir, folder, "contig_coverage.txt")
+    read_delim(file_path, delim = "\t", col_names = FALSE, show_col_types = FALSE) %>%
+      select(reference = `X1`, Length = `X3`, Breadth_of_Coverage = `X6`, Depth_of_Coverage = `X7`)
+  }) %>%
+  bind_rows()
+
+final_data <- final_data %>%
+  left_join(coverage_data, by = "reference") %>%
+  relocate(Length, Breadth_of_Coverage, Depth_of_Coverage, .after = 4)  # Sütunları doğru sırada konumlandır
+
+output_final_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/tpl.txt"
+write_csv(final_data, output_final_path)
+
+cat("Final table with Length, Breadth_of_Coverage, and Depth_of_Coverage was successfully saved to:", output_final_path, "\n")
+
+```
+```{r}
+library(readr)
+library(dplyr)
+
+final_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/tpl.txt"
+final_data <- read_csv(final_path, show_col_types = FALSE)
+
+# Calculate the total number of contigs
+total_contigs <- nrow(final_data)
+
+# Calculate the number of classified and unclassified contigs
+classified_contigs <- final_data %>%
+  filter(Classification == "C") %>%
+  nrow()  # The number of classified contigs
+
+unclassified_contigs <- final_data %>%
+  filter(Classification == "U") %>%
+  nrow()  # Calculate the percentage of classified and unclassified contigs
+
+# Calculate the percentage of classified and unclassified contigs
+classified_percentage <- (classified_contigs / total_contigs) * 100
+unclassified_percentage <- (unclassified_contigs / total_contigs) * 100
+
+# Calculate the total number of ancient contigs
+total_ancient_contigs <- final_data %>%
+  filter(Antiquity == TRUE) %>%
+  nrow()  # Antik contig sayısı
+
+# Calculate the classified and Declassified percentages among ancient contigs
+classified_ancient_contigs <- final_data %>%
+  filter(Antiquity == TRUE, Classification == "C") %>%
+  nrow()  # The number of classified ancient contig
+
+unclassified_ancient_contigs <- final_data %>%
+  filter(Antiquity == TRUE, Classification == "U") %>%
+  nrow()  # Number of unclassified ancient contigs
+
+classified_ancient_percentage <- (classified_ancient_contigs / total_ancient_contigs) * 100
+unclassified_ancient_percentage <- (unclassified_ancient_contigs / total_ancient_contigs) * 100
+
+results <- paste(
+  "Total contigs:", total_contigs,
+  "\nClassified contigs:", classified_contigs, "(", round(classified_percentage, 2), "%)",
+  "\nUnclassified contigs:", unclassified_contigs, "(", round(unclassified_percentage, 2), "%)",
+  "\nTotal ancient contigs:", total_ancient_contigs,
+  "\nClassified ancient contigs:", classified_ancient_contigs, "(", round(classified_ancient_percentage, 2), "%)",
+  "\nUnclassified ancient contigs:", unclassified_ancient_contigs, "(", round(unclassified_ancient_percentage, 2), "%)",
+  sep = "\n"
+)
+
+output_txt_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/contig_classification_results.txt"
+writeLines(results, output_txt_path)
+
+cat("Analysis results were successfully saved to:", output_txt_path, "\n")
+
+
+```
