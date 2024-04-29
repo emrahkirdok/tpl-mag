@@ -1,1 +1,118 @@
+---
+title: "Data Processing and Analysis with CSV Files: Merging, Filtering, and Calculating Antiquity"
+author: "Furkan Kürşat Özer"
+date: "29 04 2024"
+output: html_document
 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readr)
+library(dplyr)
+
+base_dir <- "" # Specify your own file path
+
+folders <- c("tpl002", "tpl003", "tpl004", "tpl192", "tpl193", "tpl522", "tpl523", "tpl524", "tpl525")
+
+merged_data <- folders %>%
+  lapply(function(folder) {
+    csv_file <- file.path(base_dir, folder, "pydamage_results.csv")
+    read_csv(csv_file, show_col_types = FALSE)  # Uyarıyı gizle
+  }) %>%
+  bind_rows()
+
+output_path <- "" # Specify your own file path
+write_csv(merged_data, output_path)
+
+cat("The table was successfully saved:", output_path, "\n")
+
+```
+
+```{r}
+library(dplyr)
+
+selected_columns <- c("reference", "CtoT-0", "CtoT-1", "CtoT-2", "CtoT-3", "CtoT-4", 
+                      "CtoT-5", "CtoT-6", "CtoT-7", "CtoT-8", "CtoT-9", 
+                      "CtoT-10", "CtoT-11", "CtoT-12", "CtoT-13", "CtoT-14", 
+                      "CtoT-15", "CtoT-16", "CtoT-17", "CtoT-18", "CtoT-19")
+
+# Create a new table by holding the specified columns
+filtered_data <- merged_data %>%
+  select(all_of(selected_columns))
+
+output_path_filtered <- ""
+write_csv(filtered_data, output_path_filtered)
+
+cat("The filtered table was successfully saved:", output_path_filtered, "\n")
+
+```
+```{r}
+library(readr)
+library(dplyr)
+
+merged_path <- "" # Specify your own file path
+merged_data <- read_csv(merged_path, show_col_types = FALSE)
+
+# The path and folder names of files containing ancient references
+base_dir <- "" # Specify your own file path
+folders <- c("tpl002", "tpl003", "tpl004", "tpl192", "tpl193", "tpl522", "tpl523", "tpl524", "tpl525")
+
+antique_references <- folders %>%
+  lapply(function(folder) {
+    csv_file <- file.path(base_dir, folder, "pydamage_filtered_results.csv")
+    read_csv(csv_file, show_col_types = FALSE) %>%
+      pull(reference)  # Just take the reference column
+  }) %>%
+  unlist() %>%
+  unique()  # Get singular references
+
+# Add the "Antiquity" column to the main table as the second column Oct.
+merged_data_with_antiquity <- merged_data %>%
+  mutate(Antiquity = reference %in% antique_references) %>%
+  relocate(Antiquity, .after = reference)
+
+
+output_path_with_antiquity <- "" # Specify your own file path
+write_csv(merged_data_with_antiquity, output_path_with_antiquity)
+
+cat("With the knowledge of antiquity, the table was successfully recorded:", output_path_with_antiquity, "\n")
+
+```
+```{r}
+library(dplyr)
+library(readr)
+
+merged_path <- "" # Specify your own file path
+merged_data_with_antiquity <- read_csv(merged_path, show_col_types = FALSE)
+
+# Calculate the total number of references
+total_references <- nrow(merged_data_with_antiquity)
+
+# Calculate the number of antique references
+num_antique_references <- merged_data_with_antiquity %>%
+  filter(Antiquity == TRUE) %>%
+  nrow()
+
+# Calculate the percentage of antique references
+percentage_antique <- (num_antique_references / total_references) * 100
+
+# Store the results in a text format
+results <- paste(
+  "Total number of references:", total_references,
+  "\nNumber of antique references:", num_antique_references,
+  "\nPercentage of antique references:", round(percentage_antique, 2), "%",
+  sep = " "
+)
+
+# Save the results to a TXT file
+output_txt_path <- "" # Specify your own file path
+writeLines(results, output_txt_path)
+
+# Display a message confirming the file was saved successfully
+cat("Results successfully saved to:", output_txt_path, "\n")
+
+```
