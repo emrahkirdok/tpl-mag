@@ -189,7 +189,7 @@ coverage_data <- folders %>%
 
 final_data <- final_data %>%
   left_join(coverage_data, by = "reference") %>%
-  relocate(Length, Breadth_of_Coverage, Depth_of_Coverage, .after = 4)  # Sütunları doğru sırada konumlandır
+  relocate(Length, Breadth_of_Coverage, Depth_of_Coverage, .after = 4)  
 
 output_final_path <- "C:/Users/kursa/OneDrive/Desktop/sonuc/tpl.txt"
 write_csv(final_data, output_final_path)
@@ -197,6 +197,7 @@ write_csv(final_data, output_final_path)
 cat("Final table with Length, Breadth_of_Coverage, and Depth_of_Coverage was successfully saved to:", output_final_path, "\n")
 
 ```
+
 ```{r}
 library(readr)
 library(dplyr)
