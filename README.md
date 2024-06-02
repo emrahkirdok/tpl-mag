@@ -163,6 +163,13 @@ ID=your_sample
 sbatch scripts/pydamage.sh ${ID}
 ```
 
+#### PyDamage Filtering 
+
+```bash
+ID=your_sample
+sbatch scripts/filter_pydamage.sh ${ID}
+```
+
 #### Classification with KrakenUniq
 
 ```bash
