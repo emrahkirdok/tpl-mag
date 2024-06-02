@@ -162,3 +162,10 @@ The graphic outputs will be saved to the `results/mapping/${ID}/` directories fo
 ID=your_sample
 sbatch scripts/pydamage.sh ${ID}
 ```
+
+#### Classification with KrakenUniq
+
+```bash
+ID=your_sample
+sbatch scripts/krakenuniq.sh ${ID}
+```
